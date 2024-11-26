@@ -1,5 +1,10 @@
 import { ApiProperty, ApiSchema } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
 import { AutoMap } from '@automapper/classes';
 
 @ApiSchema({ name: 'CreateBillRequest' })
