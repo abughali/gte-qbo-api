@@ -27,13 +27,13 @@ export class CreateBillRequestDto {
   billDate: string;
 
   @ApiProperty({
-    description: 'The date the service was provided.',
+    description: 'The due date of the bill.',
     example: '2024-10-29',
   })
   @IsOptional()
   @IsDateString()
   @AutoMap()
-  serviceDate: string;
+  dueDate: string;
 
   @ApiProperty({
     description: 'The currency of the bill amount.',
@@ -45,10 +45,10 @@ export class CreateBillRequestDto {
 
   @ApiProperty({
     description: 'The name of the supplier.',
-    example: 'Supplier Name',
+    example: 'HotelBeds XML',
   })
   @AutoMap()
-  supplierName: string;
+  supplier: string;
 
   @ApiProperty({
     description: 'The booking code associated with the bill.',
@@ -65,7 +65,7 @@ export class CreateBillRequestDto {
   @IsNotEmpty()
   @IsNumber({ maxDecimalPlaces: 2 })
   @AutoMap()
-  itemAmount: number;
+  lineAmount: number;
 
   @ApiProperty({
     description: 'The tax amount applied to the item or service.',
@@ -74,7 +74,7 @@ export class CreateBillRequestDto {
   @IsNotEmpty()
   @IsNumber({ maxDecimalPlaces: 2 })
   @AutoMap()
-  taxes: number;
+  lineTaxAmount: number;
 
   @ApiProperty({
     description: 'A detailed description of the item or service.',
@@ -82,41 +82,34 @@ export class CreateBillRequestDto {
       'Name :- John Stark\nHilton Hotel\nTravel Dates: 2024-10-25 to 2024-10-29',
   })
   @AutoMap()
-  itemDescription: string;
+  lineDescription: string;
 
   @ApiProperty({
-    description: 'The tax code applied to the transaction.',
+    description: 'The tax code applied to the bill.',
     example: 'EX Exempt',
   })
   @IsNotEmpty()
   @AutoMap()
-  taxCode: string;
+  lineTaxCode: string;
 
   @ApiProperty({
-    description: 'The type of service related to the bill.',
-    example: 'Hotel Booking',
+    description: 'The account name.',
+    example: 'XML - COS',
   })
   @AutoMap()
-  service: string;
+  account: string;
 
   @ApiProperty({
-    description: 'The account manager responsible for the bill.',
-    example: 'Account Manager Name',
+    description: 'The customer name.',
+    example: 'TDS',
   })
   @AutoMap()
-  accountManager: string;
+  customer: string;
 
   @ApiProperty({
-    description: 'The payment terms agreed for the bill.',
-    example: 'Net 30',
+    description: 'The product name.',
+    example: 'XML Hotel',
   })
   @AutoMap()
-  paymentTerms: string;
-
-  @ApiProperty({
-    description: 'The location associated with the supplier or transaction.',
-    example: 'UNITED STATES',
-  })
-  @AutoMap()
-  location: string;
+  product: string;
 }
