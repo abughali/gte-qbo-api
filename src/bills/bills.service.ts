@@ -46,7 +46,7 @@ export class BillsService {
       CreateBillRequestDto,
       Bill,
     );
-    this.logger.log('Returns list of bills');
+    this.logger.log(`Number of bills returned: ${bills.length}`);
     return { bills };
   }
 }

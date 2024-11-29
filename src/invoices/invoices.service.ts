@@ -55,7 +55,7 @@ export class InvoicesService {
       CreateInvoiceRequestDto,
       Invoice,
     );
-    this.logger.log('Returns list of invoices');
+    this.logger.log(`Number of invoices returned: ${invoices.length}`);
     return { invoices };
   }
 }
