@@ -3,15 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
 import { CreateInvoiceRequestDto } from './dto/create-invoice-request.dto';
 import { Invoice } from './entities/invoice.entity';
-import { InvoiceListResponseDto } from './dto/list-invoices.dto';
 import { Mapper } from '@automapper/core';
 import { InjectMapper } from '@automapper/nestjs';
+import { CreateInvoiceResponseDto } from './dto/create-invoice-response.dto';
 
 @Injectable()
 export class InvoicesService {
   constructor(
     @InjectRepository(Invoice)
-    private readonly invoiceRepository: Repository<CreateInvoiceRequestDto>,
+    private readonly invoiceRepository: Repository<Invoice>,
     @InjectMapper() private readonly mapper: Mapper,
   ) {}
   private readonly logger = new Logger(InvoicesService.name, {
@@ -44,7 +44,7 @@ export class InvoicesService {
   async findByDateRange(
     startDate: string,
     endDate: string,
-  ): Promise<InvoiceListResponseDto> {
+  ): Promise<CreateInvoiceResponseDto[]> {
     const filteredInvoices = await this.invoiceRepository.find({
       where: {
         invoiceDate: Between(startDate, endDate),
@@ -52,10 +52,10 @@ export class InvoicesService {
     });
     const invoices = await this.mapper.mapArrayAsync(
       filteredInvoices,
-      CreateInvoiceRequestDto,
       Invoice,
+      CreateInvoiceResponseDto,
     );
     this.logger.log(`Number of invoices returned: ${invoices.length}`);
-    return { invoices };
+    return invoices ;
   }
 }

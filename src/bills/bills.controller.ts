@@ -12,8 +12,8 @@ import {
 } from '@nestjs/swagger';
 import { ApiKeyGuard } from '../auth/auth.guard';
 import { format } from 'date-fns';
-import { BillListResponseDto } from './dto/list-bills.dto';
 import { CreateInvoiceResponseDto } from '../invoices/dto/create-invoice-response.dto';
+import { CreateBillResponseDto } from './dto/create-bill-response.dto';
 
 @ApiSecurity('X-API-KEY')
 @UseGuards(ApiKeyGuard)
@@ -46,13 +46,13 @@ export class BillsController {
   })
   @ApiOkResponse({
     description: 'Returns a list of bills within the specified date range',
-    type: BillListResponseDto,
+    type: [CreateBillResponseDto],
   })
   @ApiOperation({ operationId: 'query_bills' })
   async findByDateRange(
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
-  ): Promise<BillListResponseDto> {
+  ): Promise<CreateBillResponseDto[]> {
     return this.billsService.findByDateRange(startDate, endDate);
   }
 }

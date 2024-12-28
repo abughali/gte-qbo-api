@@ -10,7 +10,6 @@ import {
   ApiOkResponse,
   ApiOperation,
 } from '@nestjs/swagger';
-import { InvoiceListResponseDto } from './dto/list-invoices.dto';
 import { ApiKeyGuard } from '../auth/auth.guard';
 import { CreateInvoiceResponseDto } from './dto/create-invoice-response.dto';
 import { format } from 'date-fns';
@@ -46,13 +45,13 @@ export class InvoicesController {
   })
   @ApiOkResponse({
     description: 'Returns a list of invoices within the specified date range',
-    type: InvoiceListResponseDto,
+    type: [CreateInvoiceResponseDto],
   })
   @ApiOperation({ operationId: 'query_invoices' })
   async findByDateRange(
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
-  ): Promise<InvoiceListResponseDto> {
+  ): Promise<CreateInvoiceResponseDto[]> {
     return this.invoicesService.findByDateRange(startDate, endDate);
   }
 }

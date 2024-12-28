@@ -5,13 +5,13 @@ import { Between, Repository } from 'typeorm';
 import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
 import { Bill } from './entities/bill.entity';
-import { BillListResponseDto } from './dto/list-bills.dto';
+import { CreateBillResponseDto } from './dto/create-bill-response.dto';
 
 @Injectable()
 export class BillsService {
   constructor(
     @InjectRepository(Bill)
-    private readonly billRepository: Repository<CreateBillRequestDto>,
+    private readonly billRepository: Repository<Bill>,
     @InjectMapper() private readonly mapper: Mapper,
   ) {}
   private readonly logger = new Logger(BillsService.name, {
@@ -35,7 +35,7 @@ export class BillsService {
   async findByDateRange(
     startDate: string,
     endDate: string,
-  ): Promise<BillListResponseDto> {
+  ): Promise<CreateBillResponseDto[]> {
     const filteredBills = await this.billRepository.find({
       where: {
         billDate: Between(startDate, endDate),
@@ -43,10 +43,10 @@ export class BillsService {
     });
     const bills = await this.mapper.mapArrayAsync(
       filteredBills,
-      CreateBillRequestDto,
       Bill,
+      CreateBillResponseDto,
     );
     this.logger.log(`Number of bills returned: ${bills.length}`);
-    return { bills };
+    return bills;
   }
 }
