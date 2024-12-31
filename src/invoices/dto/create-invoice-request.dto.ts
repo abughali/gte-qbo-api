@@ -76,6 +76,13 @@ export class CreateInvoiceRequestDto {
   location: string;
 
   @ApiProperty({
+    description: 'The account manager responsible for the invoice.',
+    example: 'XML Agency',
+  })
+  @AutoMap()
+  accountManager: string;  
+
+  @ApiProperty({
     description: 'The details or line items associated with the invoice.',
     type: [InvoiceLineDto],
   })

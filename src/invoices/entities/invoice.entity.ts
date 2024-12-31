@@ -44,6 +44,10 @@ export class Invoice {
   @AutoMap()
   paymentTerms: string;
 
+  @Column({ type: 'varchar', length: 100 })
+  @AutoMap()
+  accountManager: string;
+
   @ApiProperty({ description: 'Location of the service or customer' })
   @Column({ type: 'varchar', length: 100 })
   @AutoMap()
