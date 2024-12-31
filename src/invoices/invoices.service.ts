@@ -49,7 +49,9 @@ export class InvoicesService {
       where: {
         invoiceDate: Between(startDate, endDate),
       },
+      relations: ['lines'],
     });
+
     const invoices = await this.mapper.mapArrayAsync(
       filteredInvoices,
       Invoice,

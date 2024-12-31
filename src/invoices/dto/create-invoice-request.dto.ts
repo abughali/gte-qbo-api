@@ -1,11 +1,17 @@
 import { ApiProperty, ApiSchema } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsNumber } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
 import { AutoMap } from '@automapper/classes';
+import { InvoiceLineDto } from './invoice-line.dto';
 
 @ApiSchema({ name: 'CreateInvoiceRequest' })
 export class CreateInvoiceRequestDto {
   @ApiProperty({
-    description: 'The invoice number from source system.',
+    description: 'The invoice number from the source system.',
     example: '119209',
   })
   @IsNotEmpty()
@@ -22,15 +28,7 @@ export class CreateInvoiceRequestDto {
   invoiceDate: string;
 
   @ApiProperty({
-    description: 'The date the service was provided.',
-    example: '2024-10-29',
-  })
-  @IsDateString()
-  @AutoMap()
-  serviceDate: string;
-
-  @ApiProperty({
-    description: 'The currency of the invoice amount.',
+    description: 'The currency of the invoice.',
     example: 'AED',
   })
   @IsNotEmpty()
@@ -41,6 +39,7 @@ export class CreateInvoiceRequestDto {
     description: 'The name of the customer.',
     example: 'RateHawk–Guru XML',
   })
+  @IsNotEmpty()
   @AutoMap()
   customerName: string;
 
@@ -53,33 +52,7 @@ export class CreateInvoiceRequestDto {
   bookingCode: string;
 
   @ApiProperty({
-    description: 'The amount of the item or service.',
-    example: 206.87,
-  })
-  @IsNotEmpty()
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @AutoMap()
-  itemAmount: number;
-
-  @ApiProperty({
-    description: 'The tax amount applied to the item or service.',
-    example: 0.0,
-  })
-  @IsNotEmpty()
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @AutoMap()
-  taxes: number;
-
-  @ApiProperty({
-    description: 'A detailed description of the item or service.',
-    example:
-      'Name :- John Stark\nHilton Hotel\nTravel Dates: 2024-10-25 to 2024-10-29',
-  })
-  @AutoMap()
-  itemDescription: string;
-
-  @ApiProperty({
-    description: 'The tax code applied to the transaction.',
+    description: 'The tax code applied to the invoice.',
     example: 'EX Exempt',
   })
   @IsNotEmpty()
@@ -87,23 +60,10 @@ export class CreateInvoiceRequestDto {
   taxCode: string;
 
   @ApiProperty({
-    description: 'The type of service related to the invoice.',
-    example: 'XML Hotel',
-  })
-  @AutoMap()
-  service: string;
-
-  @ApiProperty({
-    description: 'The account manager responsible for the invoice.',
-    example: 'XML Agency',
-  })
-  @AutoMap()
-  accountManager: string;
-
-  @ApiProperty({
     description: 'The payment terms agreed for the invoice.',
     example: 'Net 30',
   })
+  @IsNotEmpty()
   @AutoMap()
   paymentTerms: string;
 
@@ -111,6 +71,16 @@ export class CreateInvoiceRequestDto {
     description: 'The location associated with the customer or transaction.',
     example: 'UNITED STATES',
   })
+  @IsNotEmpty()
   @AutoMap()
   location: string;
+
+  @ApiProperty({
+    description: 'The details or line items associated with the invoice.',
+    type: [InvoiceLineDto],
+  })
+  @ValidateNested({ each: true })
+  @Type(() => InvoiceLineDto)
+  @AutoMap()
+  lines: InvoiceLineDto[];
 }
