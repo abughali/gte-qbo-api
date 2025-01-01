@@ -6,7 +6,6 @@ import { Invoice } from './invoice.entity';
 @Entity()
 export class InvoiceLines {
   @PrimaryGeneratedColumn()
-  @AutoMap()
   id: number;
 
   @ApiProperty({ description: 'Description of the service or item' })

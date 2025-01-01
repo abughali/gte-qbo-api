@@ -1,5 +1,5 @@
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
-import { createMap, Mapper } from '@automapper/core';
+import { createMap, forMember, mapFrom, Mapper } from '@automapper/core';
 import { Injectable } from '@nestjs/common';
 import { Bill } from '../entities/bill.entity';
 import { CreateBillResponseDto } from '../dto/create-bill-response.dto';
@@ -13,8 +13,20 @@ export class BillProfile extends AutomapperProfile {
 
   override get profile() {
     return (mapper: Mapper) => {
-      createMap(mapper, Bill, CreateBillResponseDto);
-      createMap(mapper, CreateBillRequestDto, Bill);
+      createMap(
+        mapper,
+        Bill,
+        CreateBillResponseDto,
+        forMember(
+          (dest) => dest.lines,
+          mapFrom((source) =>
+            source.lines.map(({ id, ...lineDetails }) => lineDetails), // Exclude line id
+          ),
+        ),
+      );
+      createMap(mapper, CreateBillRequestDto, Bill,
+        forMember((dest) => dest.lines, mapFrom((src) => src.lines)),
+      );      
     };
   }
 }

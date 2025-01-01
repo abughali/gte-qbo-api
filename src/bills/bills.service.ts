@@ -40,6 +40,7 @@ export class BillsService {
       where: {
         billDate: Between(startDate, endDate),
       },
+      relations: ['lines'],
     });
     const bills = await this.mapper.mapArrayAsync(
       filteredBills,

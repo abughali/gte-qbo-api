@@ -6,7 +6,7 @@ import {
 } from 'class-validator';
 import { AutoMap } from '@automapper/classes';
 
-@ApiSchema({ name: 'InvoiceLines' })
+@ApiSchema({ name: 'InvoiceLine' })
 export class InvoiceLineDto {
   @ApiProperty({
     description: 'A detailed description of the item or service.',

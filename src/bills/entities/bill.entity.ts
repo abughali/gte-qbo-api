@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { AutoMap } from '@automapper/classes';
+import { BillLines } from './bill-lines.entity';
 
 @Entity()
 export class Bill {
@@ -38,38 +39,14 @@ export class Bill {
   @AutoMap()
   bookingCode: string;
 
-  @ApiProperty({ description: 'Item Amount' })
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  @AutoMap()
-  lineAmount: number;
-
-  @ApiProperty({ description: 'Taxes' })
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  @AutoMap()
-  lineTaxAmount: number;
-
-  @ApiProperty({ description: 'Item Description' })
-  @Column({ type: 'varchar', length: 1000 })
-  @AutoMap()
-  lineDescription: string;
-
   @ApiProperty({ description: 'Tax Code' })
   @Column({ type: 'varchar', length: 50 })
   @AutoMap()
-  lineTaxCode: string;
+  taxCode: string;
 
-  @ApiProperty({ description: 'Account Name' })
-  @Column({ type: 'varchar', length: 100 })
+  @ApiProperty({ description: 'Details associated with the bill' })
+  @OneToMany(() => BillLines, (detail) => detail.bill, { cascade: true })
   @AutoMap()
-  account: string;
-
-  @ApiProperty({ description: 'Customer Name' })
-  @Column({ type: 'varchar', length: 500 })
-  @AutoMap()
-  customer: string;
-
-  @ApiProperty({ description: 'Product Name' })
-  @Column({ type: 'varchar', length: 50 })
-  @AutoMap()
-  product: string;
+  lines: BillLines[];
 }
+

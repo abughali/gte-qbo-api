@@ -1,6 +1,5 @@
 import { Controller, Post, Body, UseGuards, Get, Query } from '@nestjs/common';
 import { BillsService } from './bills.service';
-import { CreateBillRequestDto } from './dto/create-bill-request.dto';
 import {
   ApiBody,
   ApiCreatedResponse,
@@ -12,7 +11,7 @@ import {
 } from '@nestjs/swagger';
 import { ApiKeyGuard } from '../auth/auth.guard';
 import { format } from 'date-fns';
-import { CreateInvoiceResponseDto } from '../invoices/dto/create-invoice-response.dto';
+import { CreateBillRequestDto } from './dto/create-bill-request.dto';
 import { CreateBillResponseDto } from './dto/create-bill-response.dto';
 
 @ApiSecurity('X-API-KEY')
@@ -24,7 +23,7 @@ export class BillsController {
   @Post()
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
-    type: CreateInvoiceResponseDto,
+    type: CreateBillResponseDto,
   })
   @ApiForbiddenResponse({ description: 'Forbidden.' })
   @ApiBody({ type: CreateBillRequestDto })

@@ -1,4 +1,4 @@
-import { ApiProperty, ApiSchema, PartialType } from '@nestjs/swagger';
+import { ApiProperty, ApiSchema } from '@nestjs/swagger';
 import { CreateBillRequestDto } from './create-bill-request.dto';
 import { AutoMap } from '@automapper/classes';
 
