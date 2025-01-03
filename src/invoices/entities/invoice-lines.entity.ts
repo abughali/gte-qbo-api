@@ -11,12 +11,12 @@ export class InvoiceLines {
   @ApiProperty({ description: 'Description of the service or item' })
   @Column({ type: 'varchar', length: 1000 })
   @AutoMap()
-  description: string;
+  lineDescription: string;
 
   @ApiProperty({ description: 'Service Name' })
   @Column({ type: 'varchar', length: 100 })
   @AutoMap()
-  service: string;
+  serviceName: string;
 
   @ApiProperty({ description: 'Service Date' })
   @Column({ type: 'date' })

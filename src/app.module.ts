@@ -22,7 +22,7 @@ import { BillsModule } from './bills/bills.module';
         type: 'postgres',
         url: configService.get<string>('DATABASE_URL'),
         autoLoadEntities: true,
-        synchronize: false,
+        synchronize: true,
         namingStrategy: new SnakeNamingStrategy(),
       }),
     }),

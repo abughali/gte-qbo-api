@@ -53,6 +53,14 @@ export class Invoice {
   @AutoMap()
   location: string;
 
+  @Column({ type: 'varchar', nullable: true, length: 100 })
+  @AutoMap()
+  syncStatus: string;
+  
+  @Column({ type: 'varchar', nullable: true, length: 1000 })
+  @AutoMap()
+  errorDescription: string;
+
   @ApiProperty({ description: 'Details associated with the invoice' })
   @OneToMany(() => InvoiceLines, (detail) => detail.invoice, { cascade: true })
   @AutoMap()

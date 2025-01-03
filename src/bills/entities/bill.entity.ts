@@ -44,6 +44,14 @@ export class Bill {
   @AutoMap()
   taxCode: string;
 
+  @Column({ type: 'varchar', nullable: true, length: 100 })
+  @AutoMap()
+  syncStatus: string;
+
+  @Column({ type: 'varchar', nullable: true, length: 1000 })
+  @AutoMap()
+  errorDescription: string;
+  
   @ApiProperty({ description: 'Details associated with the bill' })
   @OneToMany(() => BillLines, (detail) => detail.bill, { cascade: true })
   @AutoMap()

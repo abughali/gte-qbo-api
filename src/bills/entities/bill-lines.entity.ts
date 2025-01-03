@@ -11,7 +11,7 @@ export class BillLines {
   @ApiProperty({ description: 'Item Description' })
   @Column({ type: 'varchar', length: 1000 })
   @AutoMap()
-  description: string;
+  lineDescription: string;
   
   @ApiProperty({ description: 'Item Amount' })
   @Column({ type: 'decimal', precision: 10, scale: 2 })
@@ -26,17 +26,17 @@ export class BillLines {
   @ApiProperty({ description: 'Account Name' })
   @Column({ type: 'varchar', length: 100 })
   @AutoMap()
-  account: string;
+  accountName: string;
 
   @ApiProperty({ description: 'Customer Name' })
   @Column({ type: 'varchar', length: 500 })
   @AutoMap()
-  customer: string;
+  customerName: string;
 
   @ApiProperty({ description: 'Product Name' })
   @Column({ type: 'varchar', length: 50 })
   @AutoMap()
-  product: string;
+  productName: string;
 
   @ApiProperty({ description: 'Bill this detail belongs to' })
   @ManyToOne(() => Bill, (bill) => bill.lines, { onDelete: 'CASCADE' })

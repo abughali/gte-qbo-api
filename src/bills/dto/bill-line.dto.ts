@@ -14,7 +14,7 @@ export class BillLineDto {
       'Name :- John Stark\nHilton Hotel\nTravel Dates: 2024-10-25 to 2024-10-29',
   })
   @AutoMap()
-  description: string;
+  lineDescription: string;
   
   @ApiProperty({
     description: 'The amount of the item or service.',
@@ -39,19 +39,19 @@ export class BillLineDto {
     example: 'XML - COS',
   })
   @AutoMap()
-  account: string;
+  accountName: string;
 
   @ApiProperty({
     description: 'The customer name.',
     example: 'TDS',
   })
   @AutoMap()
-  customer: string;
+  customerName: string;
 
   @ApiProperty({
     description: 'The product name.',
     example: 'XML Hotel',
   })
   @AutoMap()
-  product: string;
+  productName: string;
 }

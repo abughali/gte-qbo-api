@@ -15,7 +15,7 @@ export class InvoiceLineDto {
   })
   @IsNotEmpty()
   @AutoMap()
-  description: string;
+  lineDescription: string;
 
   @ApiProperty({
     description: 'The type of service related to the line item.',
@@ -23,7 +23,7 @@ export class InvoiceLineDto {
   })
   @IsNotEmpty()
   @AutoMap()
-  service: string;
+  serviceName: string;
 
   @ApiProperty({
     description: 'The date the service was provided.',
